@@ -82,7 +82,7 @@ async def get_shortlink(url):
 
 
 
-@Client.on_message(filters.group | filters.private & filters.text & filters.incoming) #| filters.private
+@Client.on_message(filters.group & filters.text & filters.incoming) #| filters.private
 async def give_filter(client, message):
     if message.chat.id != SUPPORT_CHAT_ID:
         manual = await manual_filters(client, message)
@@ -91,7 +91,6 @@ async def give_filter(client, message):
             try:
                 if settings['auto_ffilter']:
                     await auto_filter(client, message)
-                    
             except KeyError:
                 grpid = await active_connection(str(message.from_user.id))
                 await save_group_settings(grpid, 'auto_ffilter', True)
@@ -1629,6 +1628,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         buttons = [[
                     InlineKeyboardButton('☆ ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ ☆', url=f'http://telegram.me/{temp.U_NAME}?startgroup=true')
                 ],[
+                    InlineKeyboardButton('🔥 Top Search', callback_data="topsearch"),
                     # InlineKeyboardButton('💸 ᴇᴀʀɴ ᴍᴏɴᴇʏ 💸', callback_data="shortlink_info"),
                     InlineKeyboardButton('• ᴜᴘᴅᴀᴛᴇꜱ •', callback_data='channels')
                 ],[
