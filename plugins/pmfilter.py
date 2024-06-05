@@ -91,6 +91,7 @@ async def give_filter(client, message):
             try:
                 if settings['auto_ffilter']:
                     await auto_filter(client, message)
+                    
             except KeyError:
                 grpid = await active_connection(str(message.from_user.id))
                 await save_group_settings(grpid, 'auto_ffilter', True)
